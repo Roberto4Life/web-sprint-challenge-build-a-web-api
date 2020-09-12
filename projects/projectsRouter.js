@@ -1,13 +1,12 @@
 const express = require('express');
 const Projects = require('../data/helpers/projectModel');
 const Actions = require('../data/helpers/actionModel');
-const { route } = require('../actions/actionsRouter');
+// const { route } = require('../actions/actionsRouter');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    console.log(req.query)
-    Projects.get(req.query)
+    Projects.get(req.id)
         .then(projects => {
             res.status(200).json(projects);
         })
@@ -108,16 +107,16 @@ router.post('/:id/actions', async (req, res) => {
     }
 })
 
-router.delete('/:id/actions', async (req, res) => {
-    const actionsData = { ...req.body, project_Id: req.params.id };
+// router.delete('/:id/actions', async (req, res) => {
+//     const actionsData = { ...req.body, project_Id: req.params.id };
 
-    try {
-        const action = await Actions.insert(actionsData);
-        res.status(201).json(action);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ err });
-    }
-})
+//     try {
+//         const action = await Actions.insert(actionsData);
+//         res.status(201).json(action);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ err });
+//     }
+// })
 
 module.exports = router;
